@@ -1,4 +1,4 @@
-import os
+from os import getenv
 from typing import Any
 from datetime import datetime
 from pydantic import BaseModel, Field
@@ -12,7 +12,7 @@ def get_datetime() -> str:
 class Ping(BaseModel):
     agent: str = Field(...)
     datetime: str = Field(default_factory=get_datetime)
-    message: str = "pong"
+    message: str = Field("pong")
 
 
 def get_gitinfo() -> str:
@@ -20,12 +20,12 @@ def get_gitinfo() -> str:
 
 
 class Project(BaseModel):
-    name: str = os.getenv("NAME")
-    description: str = os.getenv("DESCRIPTION")
-    language: str = os.getenv("LANGUAGE")
-    url: str = os.getenv("URL")
+    name: str = Field(getenv("NAME"))
+    description: str = Field(getenv("DESCRIPTION"))
+    language: str = Field(getenv("LANGUAGE"))
+    url: str = Field(getenv("URL"))
     git_hash: str = Field(default_factory=get_gitinfo)
-    version: str = os.getenv("VERSION")
+    version: str = Field(getenv("VERSION"))
 
 
 class Info(BaseModel):
@@ -34,7 +34,7 @@ class Info(BaseModel):
 
 class Connection(BaseModel):
     id: int
-    protocol: str = "TCP"
+    protocol: str = Field("TCP")
     type: str | Any
     local: str
     remote: str
@@ -49,7 +49,7 @@ def get_connections() -> list[Connection]:
             id=c.fd,
             type=c.status.value,
             local=":".join(map(str, c.laddr)),
-            remote=":".join(map(str, c.raddr))
+            remote="0.0.0.0:" + str(c.raddr[1]) if c.raddr[0] == "" else ":".join(map(str, c.raddr))
         ))
     return connections
 
