@@ -1,16 +1,7 @@
-from typing import Union
+import uvicorn
+from dotenv import load_dotenv
 
-from fastapi import FastAPI
+load_dotenv()
 
-app = FastAPI()
-
-
-# Simple Get
-@app.get("/")
-async def read_root():
-    return {"Hello": "World"}
-
-
-@app.get("/items/{item_id}")
-async def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
+if __name__ == "__main__":
+    uvicorn.run("app.app:app", host="0.0.0.0", port=8000, headers=[("server", "FastAPI")], reload=True)

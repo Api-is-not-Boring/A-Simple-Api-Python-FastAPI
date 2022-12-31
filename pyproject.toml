@@ -10,6 +10,9 @@ packages = [{include = "a_simple_py_fastapi"}]
 python = "^3.10"
 fastapi = "^0.88.0"
 uvicorn = "^0.20.0"
+python-git-info = "^0.8.2"
+python-dotenv = "^0.21.0"
+pypsutil = "^0.2.0"
 
 
 [build-system]
