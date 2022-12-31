@@ -13,6 +13,7 @@ uvicorn = "^0.20.0"
 python-git-info = "^0.8.2"
 python-dotenv = "^0.21.0"
 pypsutil = "^0.2.0"
+pylint = "^2.15.9"
 
 
 [build-system]
