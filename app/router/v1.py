@@ -1,4 +1,4 @@
-from fastapi import FastAPI, APIRouter, Header
+from fastapi import APIRouter, Header
 from app.model.v1 import Ping, Info, Connections
 
 router = APIRouter(prefix="/api/v1")
