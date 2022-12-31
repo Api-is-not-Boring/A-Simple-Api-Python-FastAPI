@@ -6,7 +6,7 @@ from gitinfo import get_git_info
 
 
 def get_datetime() -> str:
-    return datetime.now().strftime('%a, %d %b %Y %H:%M:%S GMT')
+    return datetime.now().strftime("%a, %d %b %Y %H:%M:%S GMT")
 
 
 class Ping(BaseModel):
