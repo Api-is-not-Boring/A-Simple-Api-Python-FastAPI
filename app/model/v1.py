@@ -1,6 +1,6 @@
 import os
-from pydantic import BaseModel, Field
 from datetime import datetime
+from pydantic import BaseModel, Field
 import gitinfo
 
 
@@ -28,4 +28,4 @@ class Project(BaseModel):
 
 
 class Info(BaseModel):
-    project: Project = Project()
+    project: Project = Field(default_factory=Project)
