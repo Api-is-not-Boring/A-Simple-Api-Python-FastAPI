@@ -1,7 +1,8 @@
 import os
+from typing import Any
 from datetime import datetime
 from pydantic import BaseModel, Field
-import gitinfo
+from gitinfo import get_git_info
 
 
 def get_datetime() -> str:
@@ -15,7 +16,7 @@ class Ping(BaseModel):
 
 
 def get_gitinfo() -> str:
-    return gitinfo.get_git_info()["commit"][:7]
+    return get_git_info()["commit"][:7]
 
 
 class Project(BaseModel):
@@ -29,3 +30,29 @@ class Project(BaseModel):
 
 class Info(BaseModel):
     project: Project = Field(default_factory=Project)
+
+
+class Connection(BaseModel):
+    id: int
+    protocol: str = "TCP"
+    type: str | Any
+    local: str
+    remote: str
+
+
+def get_connections() -> list[Connection]:
+    from pypsutil import Process
+    connections: list[Connection] = []
+    p = Process()
+    for c in p.connections():
+        connections.append(Connection(
+            id=c.fd,
+            type=c.status.value,
+            local=":".join(map(str, c.laddr)),
+            remote=":".join(map(str, c.raddr))
+        ))
+    return connections
+
+
+class Connections(BaseModel):
+    connections: list[Connection] = Field(default_factory=get_connections)
