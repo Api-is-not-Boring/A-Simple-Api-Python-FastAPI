@@ -49,7 +49,7 @@ def get_connections() -> list[Connection]:
             id=c.fd,
             type=c.status.value,
             local=":".join(map(str, c.laddr)),
-            remote="0.0.0.0:" + str(c.raddr[1]) if c.raddr[0].isprintable() else ":".join(map(str, c.raddr))
+            remote="0.0.0.0:" + str(c.raddr[1]) if c.raddr[0] == "" else ":".join(map(str, c.raddr))
         ))
     return connections
 
