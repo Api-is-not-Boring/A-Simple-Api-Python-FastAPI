@@ -16,7 +16,7 @@ __all__ = [
     "v2_delete_message",
 ]
 
-engine = create_engine("sqlite://", echo=True)
+engine = create_engine("sqlite://")
 
 
 class Car(SQLModel, table=True):
@@ -61,8 +61,8 @@ class V2DeleteMessage(BaseModel):
 
 
 def v2_message(r: Request, m: str, c: Car = None) -> V2Message:
-    return V2Message(method="[v2] -> " + r.method + " " + m, car=c)
+    return V2Message(method=f"[v2] -> {r.method} {m}", car=c)
 
 
 def v2_delete_message(m: str, d: int, t: int) -> V2DeleteMessage:
-    return V2DeleteMessage(message="[v2] -> DELETE " + m, deleted=d, total=t)
+    return V2DeleteMessage(message=f"[v2] -> DELETE {m}", deleted=d, total=t)

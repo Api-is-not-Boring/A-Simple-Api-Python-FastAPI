@@ -3,13 +3,16 @@ from fastapi import FastAPI, Request, status
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
-from app.router import v1, v2
+from app.router import v1, v2, v3
 
 app = FastAPI(
     debug=True,
     title=getenv("NAME"),
     version=getenv("VERSION"),
-    description=getenv("DESCRIPTION")
+    description=getenv("DESCRIPTION"),
+    docs_url=None,
+    redoc_url=None,
+
 )
 
 
@@ -31,3 +34,4 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
 
 app.include_router(v1.router)
 app.include_router(v2.router)
+app.include_router(v3.router)

@@ -15,6 +15,9 @@ python-dotenv = "^0.21.0"
 pypsutil = "^0.2.0"
 pydantic = "^1.10.4"
 sqlmodel = "^0.0.8"
+python-jose = {extras = ["cryptography"], version = "^3.3.0"}
+passlib = {extras = ["bcrypt"], version = "^1.7.4"}
+python-multipart = "^0.0.5"
 
 
 [build-system]

@@ -20,12 +20,12 @@ def get_git_hash() -> str:
 
 
 class Project(BaseSettings):
-    NAME: str = Field(alias="name")
-    DESCRIPTION: str = Field(alias="description")
-    LANGUAGE: str = Field(alias="language")
-    URL: str = Field(alias="url")
+    name: str = Field(..., env="NAME")
+    description: str = Field(..., env="DESCRIPTION")
+    language: str = Field(..., env="LANGUAGE")
+    url: str = Field(..., env="URL")
     git_hash: str = Field(default_factory=get_git_hash)
-    VERSION: str = Field(alias="version")
+    version: str = Field(..., env="VERSION")
 
     class Config:
         env_file = ".env"
