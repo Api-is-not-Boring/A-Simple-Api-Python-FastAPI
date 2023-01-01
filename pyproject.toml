@@ -1,10 +1,10 @@
 [tool.poetry]
-name = "A Simple Api Python Fastapi"
+name = "a-simple-api-python-fastapi"
 version = "0.5.0"
 description = ""
 authors = ["pk85-sp3ct0r <git.pk85@sp3ct0r.one>"]
 readme = "README.md"
-packages = [{include = "a_simple_py_fastapi"}]
+packages = [{include = "a_simple_api_python_fastapi"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
