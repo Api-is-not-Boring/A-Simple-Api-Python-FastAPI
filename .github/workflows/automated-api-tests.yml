@@ -34,7 +34,6 @@ jobs:
       run: poetry install --no-interaction
     - name: Run App
       run: |
-        source $VENV
         python3 main.py &
     - name: Install Postman CLI
       run: |
@@ -68,7 +67,6 @@ jobs:
       run: poetry install --no-interaction
     - name: Run App
       run: |
-        source $VENV
         python3 main.py &
     - name: Install Postman CLI
       run: |
