@@ -23,7 +23,7 @@ jobs:
     - name: Python Poetry Action
       uses: snok/install-poetry@v1.3.3
     - name: Install Dependencies
-      run: poetry install
+      run: poetry install --no-interaction
     - name: Run App
       run: python3 main.py &
     - name: Install Postman CLI
@@ -47,7 +47,7 @@ jobs:
     - name: Python Poetry Action
       uses: snok/install-poetry@v1.3.3
     - name: Install Dependencies
-      run: poetry install
+      run: poetry install --no-interaction
     - name: Run App
       run: python3 main.py &
     - name: Install Postman CLI
