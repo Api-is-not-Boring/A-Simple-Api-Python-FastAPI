@@ -13,7 +13,8 @@ permissions:
 jobs:
   Api-Test:
     strategy:
-    matrix: [ "ubuntu-latest", "macos-latest" ]
+    matrix:
+      os: [ "ubuntu-latest", "macos-latest" ]
     defaults:
       run:
         shell: bash
