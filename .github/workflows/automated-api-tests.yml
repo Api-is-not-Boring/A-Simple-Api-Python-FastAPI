@@ -28,7 +28,7 @@ jobs:
       uses: actions/cache@v3.2.2
       with:
           path: ~/.local
-          key: poetry-${{ runner.os }}-0
+          key: poetry-0
     - name: Install Poetry
       if: steps.cached-poetry.outputs.cache-hit != 'true'
       uses: snok/install-poetry@v1.3.3
