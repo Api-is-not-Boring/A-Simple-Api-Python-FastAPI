@@ -1,7 +1,7 @@
 from os import getenv
 from typing import Any
 from datetime import datetime
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, BaseSettings, Field
 from gitinfo import get_git_info
 
 
@@ -15,17 +15,20 @@ class Ping(BaseModel):
     message: str = Field("pong")
 
 
-def get_gitinfo() -> str:
+def get_git_hash() -> str:
     return get_git_info()["commit"][:7]
 
 
-class Project(BaseModel):
-    name: str = Field(getenv("NAME"))
-    description: str = Field(getenv("DESCRIPTION"))
-    language: str = Field(getenv("LANGUAGE"))
-    url: str = Field(getenv("URL"))
-    git_hash: str = Field(default_factory=get_gitinfo)
-    version: str = Field(getenv("VERSION"))
+class Project(BaseSettings):
+    NAME: str = Field(alias="name")
+    DESCRIPTION: str = Field(alias="description")
+    LANGUAGE: str = Field(alias="language")
+    URL: str = Field(alias="url")
+    git_hash: str = Field(default_factory=get_git_hash)
+    VERSION: str = Field(alias="version")
+
+    class Config:
+        env_file = ".env"
 
 
 class Info(BaseModel):
