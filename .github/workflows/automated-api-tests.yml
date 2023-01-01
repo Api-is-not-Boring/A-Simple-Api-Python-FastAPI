@@ -13,11 +13,11 @@ permissions:
 jobs:
   Api-Test:
     strategy:
-      matrix: [ "ubuntu-latest", "macos-latest" ]
-      defaults:
-        run:
-          shell: bash
-      runs-on: ${{ matrix.os }}
+    matrix: [ "ubuntu-latest", "macos-latest" ]
+    defaults:
+      run:
+        shell: bash
+    runs-on: ${{ matrix.os }}
 
     steps:
     - uses: actions/checkout@v3
