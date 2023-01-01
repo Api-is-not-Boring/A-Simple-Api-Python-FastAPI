@@ -11,8 +11,13 @@ permissions:
   contents: read
 
 jobs:
-  Api-Test-Linux:
-    runs-on: ubuntu-latest
+  Api-Test:
+    strategy:
+      matrix: [ "ubuntu-latest", "macos-latest" ]
+      defaults:
+        run:
+          shell: bash
+      runs-on: ${{ matrix.os }}
 
     steps:
     - uses: actions/checkout@v3
@@ -25,7 +30,7 @@ jobs:
       uses: actions/cache@v3.2.2
       with:
           path: ~/.local
-          key: poetry-0
+          key: poetry-0-${{ runner.os }}
     - name: Install Poetry
       if: steps.cached-poetry.outputs.cache-hit != 'true'
       uses: snok/install-poetry@v1.3.3
@@ -46,53 +51,15 @@ jobs:
       run: poetry install --no-interaction
     - name: Run App
       run: |
-        source .venv/bin/activate
+        source $VENV
         python3 main.py &
     - name: Install Postman CLI
-      run: |
+    - run: |
         curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
-    - name: Login to Postman CLI
-      run: postman login --with-api-key ${{ secrets.POSTMAN_API_KEY }}
-    - name: Run API tests
-      run: |
-        postman collection run "7779863-874f5270-9a2e-448e-a963-87f8b9b0cbbd" -e "7779863-a2096246-922a-440d-9863-d540e8ff461d"
-        
-  Api-Test-MacOS:
-    runs-on: macos-latest
-
-    steps:
-    - uses: actions/checkout@v3
-    - name: Set up Python 3.10
-      uses: actions/setup-python@v3
-      with:
-        python-version: "3.10"
-    - name: Cache
-      id: cached-poetry
-      uses: actions/cache@v3.2.2
-      with:
-          path: ~/.local
-          key: poetry-0
-    - name: Install Poetry
-      if: steps.cached-poetry.outputs.cache-hit != 'true'
-      uses: snok/install-poetry@v1.3.3
-      with:
-        version: 1.3.1
-        virtualenvs-create: true
-        virtualenvs-in-project: true
-    - name: Load cached venv
-      id: cached-poetry-dependencies
-      uses: actions/cache@v3
-      with:
-        path: .venv
-        key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
-    - name: Install dependencies
-      if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-      run: poetry install --no-interaction --no-root
-    - name: Install library
-      run: poetry install --no-interaction
-    - name: Install Postman CLI
-      run: |
+        if: matrix.os == 'ubuntu-latest'
+    - run: |
         curl -o- "https://dl-cli.pstmn.io/install/osx_64.sh" | sh
+        if: matrix.os == 'macOS-latest'
     - name: Login to Postman CLI
       run: postman login --with-api-key ${{ secrets.POSTMAN_API_KEY }}
     - name: Run API tests
