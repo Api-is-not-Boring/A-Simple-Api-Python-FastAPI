@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "a-simple-api-python-fastapi"
+name = "a_simple_api_python_fastapi"
 version = "0.5.0"
 description = ""
 authors = ["pk85-sp3ct0r <git.pk85@sp3ct0r.one>"]
