@@ -1,7 +1,6 @@
-from os import getenv
 from typing import Any
 from datetime import datetime
-from pydantic import BaseModel, BaseSettings, Field
+from pydantic import BaseModel, BaseSettings, Field, PyObject
 from gitinfo import get_git_info
 
 
@@ -29,6 +28,7 @@ class Project(BaseSettings):
 
     class Config:
         env_file = ".env"
+        fields = {"git_hash": "git hash"}
 
 
 class Info(BaseModel):
@@ -50,7 +50,7 @@ def get_connections() -> list[Connection]:
     for c in p.connections():
         connections.append(Connection(
             id=c.fd,
-            type=c.status.value,
+            type="LISTENING" if c.status.value == "LISTEN" else c.status.value,
             local=":".join(map(str, c.laddr)),
             remote="0.0.0.0:" + str(c.raddr[1]) if c.raddr[0] == "" else ":".join(map(str, c.raddr))
         ))
