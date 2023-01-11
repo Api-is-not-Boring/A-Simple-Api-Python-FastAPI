@@ -12,7 +12,6 @@ app = FastAPI(
     description=getenv("DESCRIPTION"),
     docs_url=None,
     redoc_url=None,
-
 )
 
 
