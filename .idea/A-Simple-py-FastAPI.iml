@@ -5,4 +5,7 @@
     <orderEntry type="jdk" jdkName="Poetry (A-Simple-Api-Python-FastAPI)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
+  <component name="SonarLintModuleSettings">
+    <option name="uniqueId" value="d462dcdc-1a34-4688-8f5c-97dd1173f454" />
+  </component>
 </module>
